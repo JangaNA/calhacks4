@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 app.use(express.static('public'));
-app.use(express.static('dashboard'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
@@ -11,12 +10,8 @@ var users = {};
 var activeGames = {};
 
 app.get('/', function(req, res) {
- res.sendFile(__dirname + '/public/default.html');
+ res.sendFile(__dirname + '/public/index.html');
 
-});
-
-app.get('/dashboard/', function(req, res) {
- res.sendFile(__dirname + '/dashboard/dashboard.html');
 });
 
 io.on('connection', function(socket) {
@@ -25,7 +20,6 @@ io.on('connection', function(socket) {
     socket.on('login', function(userId) {
        doLogin(socket, userId);
     });
-
     function doLogin(socket, userId) {
         socket.userId = userId;  
      
@@ -131,15 +125,6 @@ io.on('connection', function(socket) {
       });
     });
     
-    /////////////////////
-    // Dashboard messages 
-    /////////////////////
-    
-    socket.on('dashboardlogin', function() {
-        console.log('dashboard joined');
-        socket.emit('dashboardlogin', {games: activeGames}); 
-    });
-           
 });
 
 http.listen(port, function() {
