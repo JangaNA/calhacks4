@@ -79,9 +79,6 @@ io.on('connection', function(socket) {
         users[game.users.black].games[game.id] = game.id;
   
         console.log('resuming game: ' + game.id);
-        socket.on('chat message', function(msg){
-            io.emit('chat message', msg);
-        });
         if (lobbyUsers[game.users.white]) {
             lobbyUsers[game.users.white].emit('joingame', {game: game, color: 'white'});
             delete lobbyUsers[game.users.white];
@@ -127,7 +124,6 @@ io.on('connection', function(socket) {
         gameId: socket.gameId
       });
     });
-    
 });
 
 http.listen(port, function() {
