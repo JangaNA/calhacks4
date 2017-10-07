@@ -60,12 +60,10 @@
         console.log("joined as game id: " + msg.game.id );   
         playerColor = msg.color;
         initGame(msg.game);
+        
         $('#page-lobby').hide();
         $('#page-game').show();
         
-      });
-      socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
       });
         
       socket.on('move', function (msg) {
