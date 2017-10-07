@@ -30,16 +30,12 @@
        socket.on('leavelobby', function (msg) {
         removeUser(msg);
       });
-      
-      socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
-      });
 
       socket.on('gameadd', function(msg) {
       });
       
       socket.on('resign', function(msg) {
-            if (msg.gameId == serverGame.id) {
+            if (msg.gameId === serverGame.id) {
 
               socket.emit('login', username);
 

@@ -11,7 +11,6 @@ var activeGames = {};
 
 app.get('/', function(req, res) {
  res.sendFile(__dirname + '/public/index.html');
-
 });
 
 io.on('connection', function(socket) {
@@ -69,15 +68,15 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('gameadd', {gameId: game.id, gameState:game});
     });
     
-     socket.on('resumegame', function(gameId) {
-        console.log('ready to resume game: ' + gameId);
-         
+    socket.on('resumegame', function(gameId) {
+    console.log('ready to resume game: ' + gameId);
+        
         socket.gameId = gameId;
         var game = activeGames[gameId];
         
         users[game.users.white].games[game.id] = game.id;
         users[game.users.black].games[game.id] = game.id;
-  
+
         console.log('resuming game: ' + game.id);
         if (lobbyUsers[game.users.white]) {
             lobbyUsers[game.users.white].emit('joingame', {game: game, color: 'white'});
@@ -107,14 +106,15 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('resign', msg);
     });
     
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+    });
 
     socket.on('disconnect', function(msg) {
-        
       console.log(msg);
       
       if (socket && socket.userId && socket.gameId) {
         console.log(socket.userId + ' disconnected');
-        console.log(socket.gameId + ' disconnected');
       }
       
       delete lobbyUsers[socket.userId];
