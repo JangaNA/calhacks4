@@ -14,7 +14,7 @@
       <button id='login'>Login</button>
     </div>
     <div class="page lobby" id='page-lobby'>
-      <h1>Real Chess</h1>
+      <h1>Chess</h1>
       <h2 id='userLabel'></h2>
       <h3>Active games</h3>
       <div id='gamesList'>
@@ -30,8 +30,23 @@
       <button id='game-resign'>Resign</button>
       <div id='game-board' style="width: 400px">
       </div>
-    </div>
 
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+        });
+      socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+      });
+      });
+    </script>
     <script src="lib/socket.io-1.2.0.js"></script>
     <script src="lib/jquery-1.11.1.js"></script>
     <script src="lib/WinJS.4.0/js/WinJS.min.js"></script>
