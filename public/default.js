@@ -24,6 +24,7 @@
       
       socket.on('joinlobby', function (msg) {
         addUser(msg);
+        updateUserList();
       });
       
        socket.on('leavelobby', function (msg) {
@@ -33,7 +34,7 @@
       socket.on('chat message', function(msg){
         io.emit('chat message', msg);
       });
-      
+
       socket.on('gameadd', function(msg) {
       });
       
