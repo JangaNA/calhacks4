@@ -8,15 +8,11 @@
       var game, board;
       var usersOnline = [];
       var myGames = [];
-
       socket = io();
            
       //////////////////////////////
       // Socket.io handlers
       ////////////////////////////// 
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
       
       socket.on('login', function(msg) {
             usersOnline = msg.users;
@@ -106,12 +102,6 @@
         $('#page-lobby').show();
       });
       
-      $('form').submit(function(){
-        socket.emit('chat message', $('#m').val());
-        $('#m').val('');
-        return false;
-      });
-
       var addUser = function(userId) {
         usersOnline.push(userId);
         updateUserList();
