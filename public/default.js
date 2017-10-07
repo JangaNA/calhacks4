@@ -1,5 +1,6 @@
 
 (function () {
+    
     WinJS.UI.processAll().then(function () {
       
       var socket, serverGame;
@@ -27,6 +28,10 @@
       
        socket.on('leavelobby', function (msg) {
         removeUser(msg);
+      });
+      
+      socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
       });
       
       socket.on('gameadd', function(msg) {
